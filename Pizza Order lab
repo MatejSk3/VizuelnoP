@@ -1,0 +1,134 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Pizza_Order
+{
+    public partial class Form1 : Form
+    {
+        
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void smallButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (smallButton.Checked) totalToPay.Text = smallPrice.Text;
+        }
+
+        private void mediumButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mediumButton.Checked) totalToPay.Text = mediumPrice.Text;
+
+        }
+
+        private void largeButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (largeButton.Checked) totalToPay.Text = largePrice.Text;
+        }
+
+        private void piperBox_CheckedChanged(object sender, EventArgs e)
+        {
+            int totalPrice = int.Parse(totalToPay.Text);
+            if (piperBox.Checked) totalToPay.Text = Convert.ToString(totalPrice + int.Parse(piperPrice.Text));
+            if (!piperBox.Checked) totalToPay.Text = Convert.ToString(totalPrice - int.Parse(piperPrice.Text));
+
+        }
+
+        private void cheeseBox_CheckedChanged(object sender, EventArgs e)
+        {
+            int totalPrice = int.Parse(totalToPay.Text);
+            if (cheeseBox.Checked) totalToPay.Text = Convert.ToString(totalPrice + int.Parse(cheesePrice.Text));
+            if (!cheeseBox.Checked) totalToPay.Text = Convert.ToString(totalPrice - int.Parse(cheesePrice.Text));
+        }
+
+        private void ketchupBox_CheckedChanged(object sender, EventArgs e)
+        {
+            int totalPrice = int.Parse(totalToPay.Text);
+            if (!ketchupBox.Checked) totalToPay.Text = Convert.ToString(totalPrice - int.Parse(ketchupPrice.Text));
+            if (ketchupBox.Checked) totalToPay.Text = Convert.ToString(totalPrice + int.Parse(ketchupPrice.Text));
+
+        }
+
+        private void colaQuantity_TextChanged(object sender, EventArgs e)
+        {
+            if (colaQuantity.Text.Length >= 1)
+            {
+                if (int.Parse(colaQuantity.Text) > 0)
+                    totalCola.Text = Convert.ToString(int.Parse(colaQuantity.Text) * int.Parse(colaPrice.Text));
+            }
+            else
+            {
+                totalCola.Text = "0";
+            }
+        }
+
+    
+        private void juiceQuantity_TextChanged(object sender, EventArgs e)
+        {
+            if (juiceQuantity.Text.Length >= 1)
+            {
+                if (int.Parse(juiceQuantity.Text) > 0)
+                    totalJuice.Text = Convert.ToString(int.Parse(juiceQuantity.Text) * int.Parse(juicePrice.Text));
+            }
+            else
+            {
+                totalJuice.Text = "0";
+            }
+        }
+
+
+
+        private void beerQuantity_TextChanged(object sender, EventArgs e)
+        {
+            if (beerQuantity.Text.Length >= 1)
+            {
+                if (int.Parse(beerQuantity.Text) > 0)
+                    totalBeer.Text = Convert.ToString(int.Parse(beerQuantity.Text) * int.Parse(beerPrice.Text));
+            }
+            else
+            {
+                totalBeer.Text = "0";
+            }
+    
+        }
+
+        
+        public void desertPrices()
+        {
+            if (desertBox.SelectedItem == desertBox.Items[0]) desertPrice.Text = "100";
+            if (desertBox.SelectedItem == desertBox.Items[1]) desertPrice.Text = "50";
+            if (desertBox.SelectedItem == desertBox.Items[2]) desertPrice.Text = "150";
+
+        }
+
+        private void desertBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            desertPrices();
+        }
+
+        private void orderBtn_Click(object sender, EventArgs e)
+        {
+            int finalPrice = 0;
+            int vkupnoPijaloci = int.Parse(totalCola.Text) + int.Parse(totalJuice.Text) + int.Parse(totalBeer.Text);
+            finalPrice = finalPrice + int.Parse(desertPrice.Text) + vkupnoPijaloci;
+            totalToPay.Text = Convert.ToString(int.Parse(totalToPay.Text) + finalPrice);
+            
+        }
+
+        private void moneyGiven_TextChanged(object sender, EventArgs e)
+        {
+            moneyToReturn.Text = Convert.ToString(int.Parse(moneyGiven.Text) - int.Parse(totalToPay.Text));
+        }
+    }
+
+
+    
+}
